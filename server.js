@@ -13,9 +13,22 @@ app.get('/greetings/:name', (req, res)=>{
     })
 })
 
-app.get('/message/:id', (req, res)=>{
-    console.log(`message id of ${req.params.id}`)
+function randomNum(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+
+app.get('/roll/:num', (req, res)=>{
+    let a = parseInt(req.params.num)
+    if (Number.isInteger(a)) {
+        let rndStat = randomNum(0, a)
+        res.send(`You rolled a ${rndStat}.`)
+    } else {
+        res.send(`Error: You must specify a number.`)
+    }
+})
+
+app.get('/*', (req, res) => {
     res.send({
-        msg: `id of ${req.params.id}`
+        error: '404 file note found'
     })
 })
